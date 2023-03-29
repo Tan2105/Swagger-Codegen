@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: Employee API
+  description: Employees API using swagger.io by Tanmay Rajawat
+  contact:
+    name: Tanmay Rajawat
+    email: tanmay.rajawat2019@vitbhopal.ac.in
+  version: 1.0.0
+servers: 
+ - url: http://restapi.com
+ - url: hhtp://swagrestapi.com
+paths:
+  /employee:
+    description: Employee Resource
+    get:
+      description: Operation to fetch all the employees
+      parameters: 
+        - in: query
+          name: employeename
+          required: true
+          schema:
+            type: string
+            example: Rohan
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employees'
+    put:
+      description: Updates an existing employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employee'
+      responses:
+        201:
+          description: Record successfully updated
+  /employee{id}:
+    description: Deletes an employee record
+    delete:
+      parameters: 
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successfully deletes the record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employee'
+  /employee{find}:
+    description: Get the employee based on path parameter
+    get:
+      parameters: 
+        - in: path
+          name: find
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success response with path parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employees'
+components:
+  schemas:
+    employee:
+      type: object
+      properties:
+        EmployeeID:
+          type: integer
+          example: 3
+        EmployeeName:
+          type: string
+          example: Sam
+        Designation:
+          type: string
+          example: Software Developer
+        Salary:
+          type: integer
+          example: 50000
+    employees:
+      type: array
+      items:
+        properties:
+          EmployeeID:
+            type: integer
+            example: 3
+          EmployeeName:
+            type: string
+            example: Sam
+          Designation:
+            type: string
+            example: Software Developer
+          Salary:
+            type: integer
+            example: 50000

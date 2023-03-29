@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Employee API
+  description: Employees API using swagger.io by Tanmay Rajawat
+  contact:
+    name: Tanmay Rajawat
+    email: tanmay.rajawat2019@vitbhopal.ac.in
+  version: 1.0.0
+servers:
+- url: http://restapi.com
+- url: hhtp://swagrestapi.com
+paths:
+  /employee:
+    description: Employee Resource
+    get:
+      description: Operation to fetch all the employees
+      operationId: employeeGET
+      parameters:
+      - name: employeename
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: Rohan
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employees'
+      x-swagger-router-controller: Default
+    put:
+      description: Updates an existing employee
+      operationId: employeePUT
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/employee'
+      responses:
+        "201":
+          description: Record successfully updated
+      x-swagger-router-controller: Default
+  /employee{id}:
+    description: Deletes an employee record
+    delete:
+      operationId: employeeidDELETE
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Successfully deletes the record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employee'
+      x-swagger-router-controller: Default
+  /employee{find}:
+    description: Get the employee based on path parameter
+    get:
+      operationId: employeefindGET
+      parameters:
+      - name: find
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success response with path parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/employees'
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    employee:
+      type: object
+      properties:
+        EmployeeID:
+          type: integer
+          example: 3
+        EmployeeName:
+          type: string
+          example: Sam
+        Designation:
+          type: string
+          example: Software Developer
+        Salary:
+          type: integer
+          example: 50000
+      example:
+        Designation: Software Developer
+        Salary: 50000
+        EmployeeID: 3
+        EmployeeName: Sam
+    employees:
+      type: array
+      items:
+        $ref: '#/components/schemas/employees_inner'
+    employees_inner:
+      properties:
+        EmployeeID:
+          type: integer
+          example: 3
+        EmployeeName:
+          type: string
+          example: Sam
+        Designation:
+          type: string
+          example: Software Developer
+        Salary:
+          type: integer
+          example: 50000
+      example:
+        Designation: Software Developer
+        Salary: 50000
+        EmployeeID: 3
+        EmployeeName: Sam
